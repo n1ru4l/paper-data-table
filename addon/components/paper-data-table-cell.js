@@ -4,8 +4,9 @@ import layout from '../templates/components/paper-data-table-cell';
 const {
 	Component,
 	Handlebars: { Utils: { escapeExpression } },
-  String: { htmlSafe },
-	computed
+	String: { htmlSafe },
+	computed,
+	isNone,
 } = Ember;
 
 export default Component.extend({
@@ -33,8 +34,12 @@ export default Component.extend({
 		close() {
 			this.sendAction('onClose',this);
 		},
-		toggleEdit() {
-			this.toggleProperty('showEdit');
-		}
+		toggleEdit(value) {
+			if (isNone(value)) {
+				this.toggleProperty('showEdit');
+				return;
+			}
+			this.set('showEdit', !!value);
+		},
 	}
 });
